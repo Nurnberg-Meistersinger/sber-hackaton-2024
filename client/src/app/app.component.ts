@@ -8,7 +8,7 @@ import { PriceService } from './modules/shared/services/price.service';
   styleUrls: ['./app.component.less']
 })
 export class AppComponent implements OnInit {
-  public title = 'proof-of-trade-client';
+  public title = 'Sber Hackaton 2024';
   public isAvailable = false
 
   public witness: ArrayBuffer|null = null;

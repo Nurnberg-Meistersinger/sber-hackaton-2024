@@ -44,34 +44,36 @@
     </div>
     <div class="row align-items-center m-1 w-100">
         <div class="col-md">
-            <table class="table table-bordered m-1 w-100">
-                <tbody>
-                    <tr class="bg-dark">
-                        <td class="align-middle text-center text-light">№</td>
-                        <td class="align-middle text-center text-light">Trades count</td>
-                        <td class="align-middle text-center text-light">From</td>
-                        <td class="align-middle text-center text-light">To</td>
-                        <td class="align-middle text-center text-light">Profit</td>
-                        <td class="align-middle text-center text-light">Verify proof</td>
+            <table class="table table-striped table-bordered align-middle m-1 w-100">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center pointer-cursor user-select-none">№</th>
+                        <th scope="col" class="text-center pointer-cursor user-select-none">Trades count</th>
+                        <th scope="col" class="text-center pointer-cursor user-select-none">From</th>
+                        <th scope="col" class="text-center pointer-cursor user-select-none">To</th>
+                        <th scope="col" class="text-center pointer-cursor user-select-none">Profit</th>
+                        <th scope="col" class="text-center pointer-cursor user-select-none">Verify proof</th>
                     </tr>
+                </thead>
+                <tbody>
                     <tr *ngFor="let proof of trader.proof; let i = index">
-                        <td class="align-middle text-center">{{i+1}}</td>
-                        <td class="align-middle text-center">{{tradeSize}}</td>
-                        <td class="align-middle text-center">
+                        <td class="text-center">{{i+1}}</td>
+                        <td class="text-center">{{tradeSize}}</td>
+                        <td class="text-center">
                             {{proof.dateFrom | date: 'd MMMM y hh:mm aa'}}
                         </td>
-                        <td class="align-middle text-center">
+                        <td class="text-center">
                             {{proof.dateTo | date: 'd MMMM y hh:mm aa'}}
                         </td>
-                        <td class="align-middle text-center" [ngClass]="{'table-success': proof.percentage > 0, 'table-danger': proof.percentage < 0}">{{proof.percentage | number : '1.2-2'}}%</td>
-                        <td class="align-middle text-center">
+                        <td class="text-center" [ngClass]="{'table-success': proof.percentage > 0, 'table-danger': proof.percentage < 0}">{{proof.percentage | number : '1.2-2'}}%</td>
+                        <td class="text-center copy" (click)="verifyProof(proof.id)">
                             <ng-container *ngIf="proof.state === 'success'">
-                                <span class="btn text-success">{{verificationStatesText[proof.state]}}</span>
+                                <span class="text-success user-select-none">{{verificationStatesText[proof.state]}}</span>
                             </ng-container>
                             <ng-container *ngIf="proof.state === 'failed'">
-                                <span class="btn text-danger">{{verificationStatesText[proof.state]}}</span>
+                                <span class="text-danger user-select-none">{{verificationStatesText[proof.state]}}</span>
                             </ng-container>
-                            <span *ngIf="proof.state === 'unverified'" class="btn btn-link" (click)="verifyProof(proof.id)">Verify</span>
+                            <span *ngIf="proof.state === 'unverified'" class="btn-link user-select-none">Verify</span>
                         </td>
                     </tr>
                 </tbody>

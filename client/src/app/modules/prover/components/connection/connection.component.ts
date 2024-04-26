@@ -16,7 +16,7 @@ export class ConnectionComponent implements OnInit {
   }
 
   public goToProviderSite(): void {
-    window.open("https://phantom.app/", "_blank")
+    window.open("https://metamask.io/", "_blank")
   }
 
 }

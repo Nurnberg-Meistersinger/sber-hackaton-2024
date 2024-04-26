@@ -1,38 +1,117 @@
-<ng-container *ngIf="strategies === undefined; then loadingTmpl; else loadedTmpl"></ng-container>
-
-<ng-template #loadingTmpl>
-    <ngx-spinner [bdColor]="'#eeeeee'" [color]="'#000000'" [fullScreen]="false"></ngx-spinner>
-</ng-template>
-
-<ng-template #loadedTmpl>
-    <ng-container *ngIf="strategies.length > 0; then strategiesTmpl; else emptyStrategiesTmpl"></ng-container>
-</ng-template>
-
-<ng-template #emptyStrategiesTmpl>
-    <div class="card-deck justify-content-center m-0">
-        <div class="card text-center bg-light m-3">
-            <div class="card-header bg-dark">
-                <span class="text-light"> Ooops! </span>
-            </div>
-            <div class="card-body">
-                <div class="row d-flex justify-content-center">
-                    There are no traders yet
-                </div>
-            </div>
+<div class="row w-100 my-4 mx-1">
+    <div class="col mx-5">
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="emailInput" (keyup)="onFilterInput($event, 'email')">
+            <label for="emailInput">Email</label>
         </div>
     </div>
-</ng-template>
-
-<ng-template #strategiesTmpl>
-    <div *ngIf="strategies" class="card-deck justify-content-center m-0">
-        <ng-container *ngFor="let strategy of strategies; let i = index">
-            
-            <app-strategy-card [strategy]="strategy"></app-strategy-card>
-
-            <!-- Multiple rows chunked -->
-            <div *ngIf="(i + 1) % 2 === 0" class="w-100 d-none d-sm-block d-md-block d-lg-none"></div>
-            <div *ngIf="(i + 1) % 3 === 0" class="w-100 d-none d-lg-block d-xl-none"></div>
-            <div *ngIf="(i + 1) % 4 === 0" class="w-100 d-none d-xl-block"></div>
-        </ng-container>
+    <div class="col mx-5">
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="profitFromInput" (keyup)="onFilterInput($event, 'profitFrom')">
+            <label for="profitFromInput">Profit from</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="profitToInput" (keyup)="onFilterInput($event, 'profitTo')">
+            <label for="profitToInput">Profit to</label>
+        </div>
     </div>
-</ng-template>
+    <div class="col mx-5">
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="countFromInput" (keyup)="onFilterInput($event, 'countFrom')">
+            <label for="countFromInput">Trades from</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="countToInput" (keyup)="onFilterInput($event, 'countTo')">
+            <label for="countToInput">Trades to</label>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered align-middle m-1 w-100" [ngClass]="{'table-hover': strategies !== undefined && strategies.length > 0}">
+    <thead>
+        <tr>
+            <th scope="col" class="text-center pointer-cursor user-select-none" (click)="sortColumnBy('id')">
+                №
+                <ng-container *ngIf="sortColumn === ColumnEnum.Id; then sortOrderTmpl; else noSortOrderTmpl"></ng-container>
+            </th>
+            <th scope="col" class="text-center pointer-cursor user-select-none" (click)="sortColumnBy('email')">
+                Email
+                <ng-container *ngIf="sortColumn === ColumnEnum.Email; then sortOrderTmpl; else noSortOrderTmpl"></ng-container>
+            </th>
+            <th scope="col" class="text-center pointer-cursor user-select-none" (click)="sortColumnBy('profit_per_month')">
+                Profit per month
+                <ng-container *ngIf="sortColumn === ColumnEnum.ProfitPerMonth; then sortOrderTmpl; else noSortOrderTmpl"></ng-container>
+            </th>
+            <th scope="col" class="text-center pointer-cursor user-select-none" (click)="sortColumnBy('trades_per_month')">
+                Trades per month
+                <ng-container *ngIf="sortColumn === ColumnEnum.TradesPerMonth; then sortOrderTmpl; else noSortOrderTmpl"></ng-container>
+            </th>
+            <th scope="col" class="text-center pointer-cursor user-select-none" (click)="sortColumnBy('created_at')">
+                Created at
+                <ng-container *ngIf="sortColumn === ColumnEnum.CreatedAt; then sortOrderTmpl; else noSortOrderTmpl"></ng-container>
+            </th>
+            <th scope="col" class="text-center user-select-none">Last month</th>
+            <th scope="col" class="text-center user-select-none">Verification</th>
+
+            <ng-template #sortOrderTmpl>
+                <span *ngIf="sortOrder === SortOrderEnum.Asc" class="copy float-right font-size-small">&#9650;</span>
+                <span *ngIf="sortOrder === SortOrderEnum.Desc" class="copy float-right font-size-small">&#9660;</span>
+            </ng-template>
+
+            <ng-template #noSortOrderTmpl>
+                <span class="copy float-right font-size-small text-white">&#9650;</span>
+            </ng-template>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngIf="strategies === undefined; then loadingTmpl; else loadedTmpl"></ng-container>
+
+        <ng-template #loadingTmpl>
+            <tr><td colspan="6" class="text-center">Loading . . .</td></tr>
+        </ng-template>
+
+        <ng-template #loadedTmpl>
+            <ng-container *ngIf="strategies.length > 0; then strategiesTmpl; else emptyStrategiesTmpl"></ng-container>
+        </ng-template>
+
+        <ng-template #emptyStrategiesTmpl>
+            <tr><td colspan="6" class="text-center">There are no traders yet</td></tr>
+        </ng-template>
+
+        <ng-template #strategiesTmpl>
+            <ng-container *ngFor="let strategy of strategies">
+                <ng-container *ngIf="strategyCheck(strategy)">
+                    <tr class="pointer-cursor" [routerLink]="['/user/trader', strategy.id]">
+                        <td class="text-center">{{strategy.id}}</td>
+                        <td class="text-center">{{strategy.email}}</td>
+                        <td class="text-center" [ngClass]="{'text-success': strategy.avgProfitPerMonth > 0, 'text-danger': strategy.avgProfitPerMonth < 0}">
+                            {{strategy.avgProfitPerMonth | number : '1.2-2'}}%
+                        </td>
+                        <td class="text-center">
+                            {{strategy.avgProofCountPerMonth * 2 | number : '1.0-0'}}
+                        </td>
+                        <td class="text-center">
+                            {{strategy.date | timeago}}
+                        </td>
+                        <td class="text-center">
+                            <img *ngIf="strategy.avgProfitPerMonth >= 0" src="assets/green.svg">
+                            <img *ngIf="strategy.avgProfitPerMonth < 0" src="assets/red.svg">
+                        </td>
+                        <td class="text-center pointer-cursor" (click)="verifyTrader(strategy);$event.stopPropagation()">
+                            <ng-container *ngIf="strategy.state === 'success'">
+                                <span class="float-left text-success state user-select-none">{{verificationStatesText[strategy.state]}}</span>
+                            </ng-container>
+                            <ng-container *ngIf="strategy.state === 'failed'">
+                                <span class="float-left text-danger state user-select-none">{{verificationStatesText[strategy.state]}}</span>
+                            </ng-container>
+                            <ng-container *ngIf="strategy.state === 'processing'">
+                                <span class="float-left text-info state user-select-none">{{verificationStatesText[strategy.state]}}</span>
+                            </ng-container>
+                            <span *ngIf="strategy.state === 'unverified'" class="btn-link float-left pointer-cursor user-select-none">Verify Trader</span>
+                        </td>
+                    </tr>
+                </ng-container>
+            </ng-container>
+        </ng-template>
+    </tbody>
+</table>

@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "proof-of-trade-client": {
+    "client": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -38,7 +38,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/proof-of-trade-client",
+            "outputPath": "dist/client",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -91,18 +91,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "buildTarget": "proof-of-trade-client:build"
+            "buildTarget": "client:build"
           },
           "configurations": {
             "production": {
-              "buildTarget": "proof-of-trade-client:build:production"
+              "buildTarget": "client:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "proof-of-trade-client:build"
+            "buildTarget": "client:build"
           }
         },
         "test": {
@@ -139,11 +139,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "proof-of-trade-client:serve"
+            "devServerTarget": "client:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "proof-of-trade-client:serve:production"
+              "devServerTarget": "client:serve:production"
             }
           }
         }

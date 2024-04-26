@@ -3,7 +3,7 @@ import { ActivatedRoute, Params } from '@angular/router';
 import { faCopy } from '@fortawesome/free-regular-svg-icons';
 import { NgxSpinnerService } from "ngx-spinner";
 
-import { verificationProofText } from 'src/app/core/enums/verification-proof.enum';
+import { VerificationProofEnum, verificationProofText } from 'src/app/core/enums/verification-proof.enum';
 import { TradersService } from 'src/app/modules/verifier/services/traders.service';
 import { ZkService } from 'src/app/modules/shared/services/zk.service';
 import { TraderModel } from '../../../shared/models/trader.model';
@@ -60,7 +60,7 @@ export class TraderComponent implements OnInit {
 
   public verifyProof(proofId: number): void {
     let proof = this.trader.proof[proofId]
-    if (!proof) {
+    if (!proof || proof.state !== VerificationProofEnum.Unverified) {
       return;
     }
 

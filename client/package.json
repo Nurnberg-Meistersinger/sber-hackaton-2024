@@ -1,5 +1,5 @@
 {
-  "name": "proof-of-trade-client",
+  "name": "client",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -24,6 +24,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.5.2",
     "@fortawesome/free-regular-svg-icons": "^6.5.2",
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
+    "@metamask/detect-provider": "^2.0.0",
+    "@metamask/providers": "^16.0.0",
     "@ng-bootstrap/ng-bootstrap": "^16.0.0",
     "@ngx-pwa/local-storage": "^17.0.0",
     "@pythnetwork/client": "^2.21.0",

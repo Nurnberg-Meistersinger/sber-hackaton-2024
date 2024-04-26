@@ -6,7 +6,7 @@
                     <img class="icon" src="./assets/pot-icon-inverted.png"/>
                 </div>
                 <div class="col-10 align-self-center brand" (click)="goToHome()">
-                    <a class="navbar-brand">Proof of Trade</a>
+                    <a class="navbar-brand">Sber Hackaton 2024</a>
                 </div>
             </div>
         </div>
@@ -29,7 +29,7 @@
                         style="background-color: '#4e45ba'; color: white;"
                         (click)="connectToProvider()"
                         [disabled]="connectionModel.isDisconnectable()">
-                        <img class="phantom" src="./assets/phantom-icon.png">
+                        <img class="metamask" src="./assets/metamask-icon.png">
                         {{connectionModel.isConnectable() ? 'Connect' : 'Connected' }}
                     </button> 
                 </div>

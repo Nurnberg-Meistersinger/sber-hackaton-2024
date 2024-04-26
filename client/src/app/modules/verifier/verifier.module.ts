@@ -12,7 +12,7 @@ import { StrategyCardComponent } from './components/strategies/components/strate
 import { StrategiesComponent } from './components/strategies/strategies.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Contract } from 'src/app/api/fake/contract';
-import { PhantomProvider } from 'src/app/core/wallet-providers/phantom.provider';
+import { MetaMaskProvider } from 'src/app/core/wallet-providers/metamask.provider';
 
 
 @NgModule({
@@ -27,7 +27,7 @@ import { PhantomProvider } from 'src/app/core/wallet-providers/phantom.provider'
   imports: [
     CommonModule,
     VerifierRoutingModule,
-    SharedModule.withProviders(Contract, PhantomProvider),
+    SharedModule.withProviders(Contract, MetaMaskProvider),
     FontAwesomeModule,
     NgxSpinnerModule,
   ]

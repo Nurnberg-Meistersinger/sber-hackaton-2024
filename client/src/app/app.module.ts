@@ -11,7 +11,7 @@ import { MenuComponent } from './core/components/menu/menu.component';
 import { SharedModule } from './modules/shared/shared.module';
 import { HomeComponent } from './core/components/home/home.component'
 import { Contract } from './api/fake/contract';
-import { PhantomProvider } from './core/wallet-providers/phantom.provider';
+import { MetaMaskProvider } from './core/wallet-providers/metamask.provider';
 
 @NgModule({
   declarations: [
@@ -24,7 +24,7 @@ import { PhantomProvider } from './core/wallet-providers/phantom.provider';
     BrowserAnimationsModule,
     AppRoutingModule,
     NgbModule,
-    SharedModule.withProviders(Contract, PhantomProvider),
+    SharedModule.withProviders(Contract, MetaMaskProvider),
     FontAwesomeModule,
     NgxSpinnerModule,
   ],

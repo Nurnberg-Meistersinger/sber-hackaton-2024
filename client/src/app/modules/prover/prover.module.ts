@@ -17,7 +17,7 @@ import { AmountComponent } from './components/signals/components/add-signal/comp
 import { NonceComponent } from './components/signals/components/add-signal/components/nonce/nonce.component';
 import { ActionComponent } from './components/signals/components/add-signal/components/action/action.component';
 import { FinalComponent } from './components/signals/components/add-signal/components/final/final.component';
-import { PhantomProvider } from 'src/app/core/wallet-providers/phantom.provider';
+import { MetaMaskProvider } from 'src/app/core/wallet-providers/metamask.provider';
 import { Contract } from 'src/app/api/fake/contract';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ConnectionComponent } from './components/connection/connection.component';
@@ -43,7 +43,7 @@ import { ConnectionComponent } from './components/connection/connection.componen
     FontAwesomeModule,
     FormsModule,
     ProverRoutingModule,
-    SharedModule.withProviders(Contract, PhantomProvider),
+    SharedModule.withProviders(Contract, MetaMaskProvider),
     NgxSpinnerModule,
   ]
 })
