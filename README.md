@@ -1,13 +1,11 @@
 # Sber Profitability Proving Service
 
-## Team: Fraternitas<>Libertatis
+## Team: "Fraternitas<>Libertatis". Built for [Sber Hackaton 2024](https://www.sberbank.com/ru/person/forms/hackathon).
 
 ## 1. General Overview
 
-- Demo video - [Link]
-- Source code - [Link](https://github.com/Nurnberg-Meistersinger/sber-hackaton-2024)
-- Presentation - [Link]
-- Built for Sber Hackaton 2024 - [Link](https://www.sberbank.com/ru/person/forms/hackathon)
+- Watch [Demo: `TODO`] to explore workflow of the service.
+- Read [Documentation: `TODO`] for technical details and overview of used solutions.
 
 According to [CoinMarketCap data](https://coinmarketcap.com/currencies/volume/24-hour/), as of `04/19/2024`, the total daily trading volume for the cryptocurrencies `BTC` and `ETH` amounted to more than `$60b`. This means that the crypto trading market today is one of the largest in the entire Web3 industry.
 
@@ -33,7 +31,7 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 **In the diagram below you can see a high-level overview of the entire service architecture:**
 
-![alt text](Assets/Architecture.png)
+![alt text](Assets/Architecture.jpg)
 
 ## 2. Technical Overview
 
@@ -41,27 +39,27 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 1. Traders register on the platform with their login, blockchain address and contact information.
 
-![alt text](Assets/Step1.png)
+![alt text](Assets/Step-1.jpg)
 
 2. Trader creates several trading signals via **Traders Verification Service**, which sends the request into **blockchain** using the following template: `hash(asset, buy/sell, amount, nonce)`. Trade data (ticker, amount, trade direction) is inserted by Trader himself, all this data is concatenated and hashed. Resulting hash is stored on the blockchain with an associated timestamp.
 
-![alt text](Assets/Step2.png)
+![alt text](Assets/Step-2.jpg)
 
-3. Smart contract in **Blockchain** aggregates all signals by a specific Trader.
+3. Service Operator sequentially aggregates all signals by a specific Trader and publishes them into SPPS smart contract storage.
 
-![alt text](Assets/Step3.png)
+![alt text](Assets/Step-3.jpg)
 
 4. Once all necessary signals for a specific `time interval` are accounted, Trader sends the proving request into **Traders Verification Service**, which executes the proof generation in the backend **ZK-SNARK** proving system. ZK-SNARK protocol is used for proving that the trader knows preimages of signals’ hashes that correspond to the declared performance.
 
-![alt text](Assets/Step4.png)
+![alt text](Assets/Step-4.jpg)
 
 5. **ZK-SNARK** returns the resulting ZK Proof to **Traders Verification Service**, which publishes the received proof into blockchain and makes it visible for clients in **Client Web-Service**. Local frontend downloads signals' hashes and prices on associated timestamps from blockchain (public inputs of SNARK). After that, the frontend calculates zero knowledge proof with performance percent (output of SNARK). Proof and percent are stored on blockchain too.
 
-![alt text](Assets/Step5.png)
+![alt text](Assets/Step-5.jpg)
 
 6. Now, any client can verify Trader’s proof using **Client Web-Service**, which connects user with the backend **ZK-SNARK** proving system.
 
-![alt text](Assets/Step6.png)
+![alt text](Assets/Step-6.jpg)
 
 > _Such an architecture ensures that external observers don't understand which signals a Trader has made - it is private. What is more, all market data needed for performance calculation is taken from on-chain price oracle. So all signals’ data are stored on a chain and reliable cryptography is used for performance proving - it is trustless._
 
