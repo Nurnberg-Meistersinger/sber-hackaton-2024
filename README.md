@@ -67,9 +67,9 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 - **Frontend** is currently implemented as Angular-based static page, which inludes `Traders Verification Service` and `Clients Web-Service`, connects them with the `Off-chain Infrastructure` (backend service).
 
-- **Off-chain Infrastructure** is partly implemented as a `Service Opertor` backend service, which generates ZK-Proofs using `ZK-SNARK` ciruits, written in `Circom`. We also decided to use `Groth16` as a main proving system for our circuits.
+- **Off-chain Infrastructure** is partly implemented as a `Service Opertor` backend service, which generates ZK-Proofs using `ZK-SNARK` ciruits, written in **Circom**. We also decided to use **Groth16** as a main proving system for our circuits.
 
-- **On-chain Infrastructure** consists of two main parts: On-chain smart contracts written in `Solidity` and any trusted PriceFeed Oracle. In this MVP, we considered using Chainlink PriceFeed Oracle as the main price data provider.
+- **On-chain Infrastructure** consists of two main parts: On-chain smart contracts written in **Solidity** and any trusted PriceFeed Oracle. In this MVP, we considered using **Chainlink PriceFeed Oracle** as the main price data provider.
 
 ## 4. Future Track
 
