@@ -23,9 +23,9 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 **The service has 3 main actors:**
 
-1. `Unverified Traders` are third-party individuals, entities or institutions that want to sell clients of the service access to their consulting services or trading signals for copy trading. They upload their signals into the system, which are then aggregated and verified using backend ZK-SNARK proving system.
+1. `Traders` are unverified third-party individuals, entities or institutions that want to sell clients of the service access to their consulting services or trading signals for copy trading. They upload their signals into the system, which are then aggregated and verified using backend ZK-SNARK proving system.
 
-2. `Service Operator (Sber)` is an organization that carries out regulatory functions in relation to traders, charges commissions from users and directly manages the operation of the service (for example, sets a `time interval` for which traders must provide evidence: monthly, yearly etc). Also, the operator checks `Unverified Traders` according to criteria that cannot be verified using On-chain and Off-chain Components.
+2. `Service Operator (Sber)` is an organization that carries out regulatory functions in relation to traders, charges commissions from users and directly manages the operation of the service (for example, sets a `time interval` for which traders must provide evidence: monthly, yearly etc). Also, the operator checks `Traders` according to criteria that cannot be verified using On-chain and Off-chain Components.
 
 3. `Service Clients` are buyers of traders' services who choose their own signal provider and, after payment, get the option to repeat transactions and trading strategies of the selected traders to obtain profitability.
 
