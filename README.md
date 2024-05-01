@@ -65,15 +65,23 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 ## 3. Technological Stack
 
-- **Verification Infrastructure** consists of two main parts: On-chain smart contracts written in `Solidity` and Off-chain ZK-SNARK wriiten in `Circom`.
+- **Frontend** is currently implemented as Angular-based static page, which inludes `Traders Verification Service` and `Clients Web-Service`, connects them with the `Off-chain Infrastructure` (backend service).
 
-- **Web Infrastructure** is made with a static page, which connects to our smart contracts and ZK-SNARK in process of proofs verification.
+- **Off-chain Infrastructure** is partly implemented as a `Service Opertor` backend service, which generates ZK-Proofs using `ZK-SNARK` ciruits, written in `Circom`. We also decided to use `Groth16` as a main proving system for our circuits.
+
+- **On-chain Infrastructure** consists of two main parts: On-chain smart contracts written in `Solidity` and any trusted PriceFeed Oracle. In this MVP, we considered using Chainlink PriceFeed Oracle as the main price data provider.
 
 ## 4. Future Track
 
 > _Since our prototype implements only the simplest functionality, but at the same time has the potential to become a full-fledged service in the Sber Ecosystem, in this section we will outline the main directions for the further development of our solution._
 
-`TODO: discuss the future track`
+1. **Building `Service Operator` as a full-fledged high-load backend service**, which will be integrated with the financial infrastructure of Sber: payment services, mobile application, online-broker service, insurance company, etc. We predict great interest from both bank clients and subsidiary services of the ecosystem, since our service allows to offer a qualitatively new product that has no competitors and alternatives.
+
+2. **Integration of the service with the Sber ecosystem itself** - to attract competent developers and a huge clients/investors base.
+
+3. **Expansion of the institutional investment market** - by expanding the functionality of the service: introducing the ability to confirm profitability not only for on-chain, but also off-chain operations. This will significantly reduce the financial barrier to entry for small suppliers of investment products and turn the service into an aggregator-intermediary between clients and small, uncoordinated investment companies.
+
+4. **Development of on-chain infrastructure on Siberium Chain**, which is necessary for the comfortable development of `On-chain Infrastructure` of our service: Blockchain Oracles, Web-3 Libraries, Nodes Infrastructure, Explorers, SDKs.
 
 ## 5. Deployment Addresses and TXs
 
