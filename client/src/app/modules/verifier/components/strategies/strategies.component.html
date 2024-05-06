@@ -1,28 +1,40 @@
 <div class="row w-100 my-4 mx-1">
-    <div class="col mx-5">
+    <div class="col-3">
         <div class="form-floating mb-3">
             <input type="email" class="form-control" id="emailInput" (keyup)="onFilterInput($event, 'email')">
-            <label for="emailInput">Email</label>
+            <label for="emailInput" class="user-select-none">Email</label>
         </div>
     </div>
-    <div class="col mx-5">
-        <div class="form-floating mb-3">
+    <div class="col-1" (click)="flipAdditionalFilters()">
+        <div class="row">
+            <span class="pointer-cursor text-center user-select-none">{{isAdditionalFiltersOpened ? 'Hide' : 'More'}}</span>
+        </div>
+        <div class="row">
+            <fa-icon [icon]="isAdditionalFiltersOpened ? faMinusCircle : faPlusCircle" size="2x" class="pointer-cursor text-center"></fa-icon>
+        </div>
+    </div>
+    <div class="col-2 ps-5">
+        <div *ngIf="isAdditionalFiltersOpened" class="form-floating mb-3">
             <input type="number" class="form-control" id="profitFromInput" (keyup)="onFilterInput($event, 'profitFrom')">
-            <label for="profitFromInput">Profit from</label>
-        </div>
-        <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="profitToInput" (keyup)="onFilterInput($event, 'profitTo')">
-            <label for="profitToInput">Profit to</label>
+            <label for="profitFromInput" class="user-select-none">Profit from</label>
         </div>
     </div>
-    <div class="col mx-5">
-        <div class="form-floating mb-3">
-            <input type="number" class="form-control" id="countFromInput" (keyup)="onFilterInput($event, 'countFrom')">
-            <label for="countFromInput">Trades from</label>
+    <div class="col-2 pe-5">
+        <div *ngIf="isAdditionalFiltersOpened" class="form-floating mb-3">
+            <input type="number" class="form-control" id="profitToInput" (keyup)="onFilterInput($event, 'profitTo')">
+            <label for="profitToInput" class="user-select-none">Profit to</label>
         </div>
-        <div class="form-floating mb-3">
+    </div>
+    <div class="col-2 ps-5">
+        <div *ngIf="isAdditionalFiltersOpened" class="form-floating mb-3">
+            <input type="number" class="form-control" id="countFromInput" (keyup)="onFilterInput($event, 'countFrom')">
+            <label for="countFromInput" class="user-select-none">Trades from</label>
+        </div>
+    </div>
+    <div class="col-2 pe-5">
+        <div *ngIf="isAdditionalFiltersOpened" class="form-floating mb-3">
             <input type="number" class="form-control" id="countToInput" (keyup)="onFilterInput($event, 'countTo')">
-            <label for="countToInput">Trades to</label>
+            <label for="countToInput" class="user-select-none">Trades to</label>
         </div>
     </div>
 </div>
@@ -67,7 +79,7 @@
         <ng-container *ngIf="strategies === undefined; then loadingTmpl; else loadedTmpl"></ng-container>
 
         <ng-template #loadingTmpl>
-            <tr><td colspan="6" class="text-center">Loading . . .</td></tr>
+            <tr><td colspan="7" class="text-center">Loading . . .</td></tr>
         </ng-template>
 
         <ng-template #loadedTmpl>
@@ -75,7 +87,7 @@
         </ng-template>
 
         <ng-template #emptyStrategiesTmpl>
-            <tr><td colspan="6" class="text-center">There are no traders yet</td></tr>
+            <tr><td colspan="7" class="text-center">There are no traders yet</td></tr>
         </ng-template>
 
         <ng-template #strategiesTmpl>

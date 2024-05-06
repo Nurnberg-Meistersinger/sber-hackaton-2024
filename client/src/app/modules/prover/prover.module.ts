@@ -18,7 +18,7 @@ import { NonceComponent } from './components/signals/components/add-signal/compo
 import { ActionComponent } from './components/signals/components/add-signal/components/action/action.component';
 import { FinalComponent } from './components/signals/components/add-signal/components/final/final.component';
 import { MetaMaskProvider } from 'src/app/core/wallet-providers/metamask.provider';
-import { Contract } from 'src/app/api/fake/contract';
+import { Contract } from 'src/app/api/sepolia/contract';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { ConnectionComponent } from './components/connection/connection.component';
 

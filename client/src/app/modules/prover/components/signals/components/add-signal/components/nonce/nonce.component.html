@@ -9,9 +9,7 @@
         <form (ngSubmit)="enterNonce()">
             <div class="input-group input-group-lg">
                 <input required type="number" class="form-control text-center" id="nonce" name="nonce" min="-128" max="127" [(ngModel)]="signal.nonce">
-                <div class="input-group-append">
-                  <button class="btn btn-dark" type="submit" [disabled]="!signal.nonce || signal.nonce < -128 || signal.nonce > 127">Add</button>
-                </div>
+                <button class="btn btn-dark" type="submit" [disabled]="!signal.nonce || signal.nonce < -128 || signal.nonce > 127">Add</button>
               </div>
         </form>
     </div>

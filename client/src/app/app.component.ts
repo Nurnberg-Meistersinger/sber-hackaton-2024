@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { PriceService } from './modules/shared/services/price.service';
+import SharedConsts from "./core/consts/shared-consts";
 
 @Component({
   selector: 'app-root',
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initKeys()
-    this.initPyth()
+    this.initPriceOracle()
   }
 
   private initKeys(): void {
@@ -45,6 +46,17 @@ export class AppComponent implements OnInit {
     });
   }
 
-  private initPyth(): void {
+  private initPriceOracle(): void {
+    let btcBasePrice = 60000;
+
+    this.priceService.nextBtcPrice(btcBasePrice * (10 ** SharedConsts.maxDecimalDigits))
+
+    setInterval(() => {
+      let diff = Math.floor((Math.random()*100)-50)
+  
+      this.priceService.nextBtcPrice((btcBasePrice+diff) * (10 ** SharedConsts.maxDecimalDigits))
+   }, 2000);
+
+   this.priceService.subscribeToBtcPrice()
   }
 }

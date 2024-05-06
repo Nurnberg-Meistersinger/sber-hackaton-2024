@@ -45,6 +45,7 @@ export class AmountComponent implements OnInit {
   }
 
   public isBalanceEnoughAtMoment(amount: number): boolean {
+    // todo: does float amount work?
     if (this.signal.action === SignalActionEnum.Buy) {
       return amount * MathHelper.removeDecimalDigitsNumber(this.priceService.getBtcPriceValue()) <= this.balance.usd
     } else if (this.signal.action === SignalActionEnum.Sell) {

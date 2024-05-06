@@ -10,7 +10,7 @@ export class MetaMaskProvider implements WalletProviderInterface {
         const provider = await detectEthereumProvider();
 
         if (provider) {
-            this.startApp(provider); // Initialize your dapp.
+            this.startApp(provider);
         } else {
             console.log("Please install MetaMask!");
         }

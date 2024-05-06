@@ -11,7 +11,7 @@ import { TraderComponent } from './components/trader/trader.component';
 import { StrategyCardComponent } from './components/strategies/components/strategy-card/strategy-card.component';
 import { StrategiesComponent } from './components/strategies/strategies.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { Contract } from 'src/app/api/fake/contract';
+import { Contract } from 'src/app/api/sepolia/contract';
 import { MetaMaskProvider } from 'src/app/core/wallet-providers/metamask.provider';
 
 

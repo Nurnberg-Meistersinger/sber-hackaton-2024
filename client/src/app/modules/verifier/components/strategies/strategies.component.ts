@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faMinusCircle, faPlusCircle } from '@fortawesome/free-solid-svg-icons';
 
 import { StrategiesFilters } from '../../models/strategies';
 import { StrategiesColumnEnum, strategiesColumnToEnum, strategiesColumnToModelField, StrategiesSortOrderEnum } from '../../models/strategies.enum';
@@ -14,6 +15,9 @@ import { VerificationProverEnum, verificationProverText } from '../../../../core
   styleUrls: ['./strategies.component.less']
 })
 export class StrategiesComponent implements OnInit {
+  public faPlusCircle = faPlusCircle
+  public faMinusCircle = faMinusCircle
+
   public verificationStatesText = verificationProverText
 
   strategies: StrategyModel[]
@@ -22,6 +26,7 @@ export class StrategiesComponent implements OnInit {
   sortOrder: StrategiesSortOrderEnum = StrategiesSortOrderEnum.Asc
 
   filters: StrategiesFilters = new StrategiesFilters()
+  isAdditionalFiltersOpened: boolean = false
 
   constructor(
     private tradersService: TradersService,
@@ -39,6 +44,7 @@ export class StrategiesComponent implements OnInit {
         if (this.strategies === undefined) {
           this.strategies = []
         }
+        // todo: does empty strategies work?
         
         this.strategies.push(strategy)
       }
@@ -138,6 +144,10 @@ export class StrategiesComponent implements OnInit {
     }
     
     this.filters[filterColumn] = value;
+  }
+
+  public flipAdditionalFilters(): void {
+    this.isAdditionalFiltersOpened = !this.isAdditionalFiltersOpened
   }
 
 }
