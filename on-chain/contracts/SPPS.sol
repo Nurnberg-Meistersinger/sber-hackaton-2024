@@ -52,7 +52,15 @@ contract SPPS {
     function getTradersCount() external view returns(uint) {
         return traders.length;
     }
-    
+
+    function getSignal(address trader, uint256 index) external view returns(Signal memory) {
+        return signals[trader][index];
+    }
+
+    function getAllSignals(address trader) external view returns(Signal[] memory) {
+        return signals[trader];
+    }
+
     // for demo
     function changeTradeTime(address trader, uint tradeId, uint tradeBlock) external {
         signals[trader][tradeId].blockNumber = tradeBlock;
