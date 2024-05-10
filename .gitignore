@@ -63,5 +63,13 @@ typings/
 # next.js build output
 .next
 
-artifacts/
+artifacts
 cache/
+
+!on-chain/artifacts
+on-chain/artifacts/*
+!on-chain/artifacts/contracts
+on-chain/artifacts/contracts/*
+!on-chain/artifacts/contracts/SPPS.sol
+on-chain/artifacts/contracts/SPPS.sol/*
+!on-chain/artifacts/contracts/SPPS.sol/SPPS.json
