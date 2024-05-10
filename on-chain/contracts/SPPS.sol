@@ -57,8 +57,8 @@ contract SPPS {
         return signals[trader][index];
     }
 
-    function getAllSignals(address trader) external view returns(Signal[] memory) {
-        return signals[trader];
+    function getPeriodProof(address trader, uint256 index) external view returns(PeriodProof memory) {
+        return periodProofs[trader][index];
     }
 
     // for demo
