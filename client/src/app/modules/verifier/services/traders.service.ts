@@ -25,7 +25,7 @@ export class TradersService {
     const trader = await this.contract.getTrader(index)
 
     let periodProofList = []
-    for (let j = 0; j < trader.proofsCount + 1; j++) {
+    for (let j = 0; j < trader.proofsCount; j++) {
       periodProofList.push(await this.contract.getPeriodProofs(trader.address, j))
     }
 
@@ -47,18 +47,19 @@ export class TradersService {
     return new TraderModel(index, trader.email, trader.address, proof, createdDate)
   }
 
-  public getTraders(): Observable<StrategyModel> {
-    let tradersSubject = new Subject<StrategyModel>();
+  public getTraders(): Observable<StrategyModel[]> {
+    let tradersSubject = new Subject<StrategyModel[]>();
 
-    (async () => await this.nextTrader(tradersSubject))()
+    (async () => await this.traders(tradersSubject))()
 
     return tradersSubject
   }
 
-  private async nextTrader(tradersSubject: Subject<StrategyModel>): Promise<void> {
+  private async traders(tradersSubject: Subject<StrategyModel[]>): Promise<void> {
     const now = new Date()
     const tradersCount = await this.contract.getTradersCount()
 
+    let traders: StrategyModel[] = []
     for (let i = 0; i < tradersCount; i++) {
       const traderModel = await this.getTraderModel(i)
 
@@ -78,15 +79,15 @@ export class TradersService {
       const avgProfitPerMonth = 100 * (profitSum / initBalance) / monthDiffForAvg
       const avgProofCountPerMonth = proofCount / monthDiffForAvg
 
-      tradersSubject.next(new StrategyModel(
-          i, traderModel.email, traderModel.address, proofIds,
-          avgProfitPerMonth, avgProofCountPerMonth,
-          VerificationProverEnum.Unverified, createdDate
-        )
-      )
+      traders.push(new StrategyModel(
+        i, traderModel.email, traderModel.address, proofIds,
+        avgProfitPerMonth, avgProofCountPerMonth,
+        VerificationProverEnum.Unverified, createdDate
+      ))
     }
 
-    // tradersSubject.complete()
+
+    tradersSubject.next(traders)
   }
 
   private monthDiff(from: Date, to: Date) {

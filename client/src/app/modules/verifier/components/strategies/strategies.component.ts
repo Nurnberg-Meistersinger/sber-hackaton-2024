@@ -40,13 +40,8 @@ export class StrategiesComponent implements OnInit {
 
   private initStrategies(): void {
     this.tradersService.getTraders().subscribe(
-      (strategy: StrategyModel) => {
-        if (this.strategies === undefined) {
-          this.strategies = []
-        }
-        // todo: does empty strategies work?
-        
-        this.strategies.push(strategy)
+      (strategies: StrategyModel[]) => {
+        this.strategies = strategies
       }
     )
   }

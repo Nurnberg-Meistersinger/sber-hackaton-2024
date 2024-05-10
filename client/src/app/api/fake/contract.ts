@@ -77,22 +77,6 @@ export class Contract implements SmartContractInterface {
         }
     }
 
-    public async getPeriodProofsPage(address: string, page: number): Promise<PeriodProofResponseInterface[]> {
-        return [
-            {
-                y: 99,
-                newBalanceHash: "999",
-                blockNumber: BigInt(9999),
-                proof: {
-                    pi_a: ["p1"],
-                    pi_b: [["p2"], ["p3"]],
-                    pi_c: ["p4"],
-                },
-                prices: [BigInt(9999), BigInt(9990)],
-            }
-        ]
-    }
-
     public async getTimestampByBlockNumber(blockNumber: bigint): Promise<number> {
         return 1713661576
     }

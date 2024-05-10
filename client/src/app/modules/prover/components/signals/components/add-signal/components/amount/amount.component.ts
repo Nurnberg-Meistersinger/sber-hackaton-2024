@@ -28,7 +28,7 @@ export class AmountComponent implements OnInit {
   }
 
   public enterAmount(): void {
-    const amount = MathHelper.decimalDigitsNumber(+this.amount.replace(' ', ''))
+    const amount = MathHelper.decimalDigitsNumber(+this.amount.replace(' ', '').replace(',', '.'))
 
     if (!this.isBalanceEnoughAtMoment(amount)) {
       this.toastr.error('Not enough balance for this action')

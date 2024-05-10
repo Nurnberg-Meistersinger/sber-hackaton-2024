@@ -79,6 +79,7 @@ export class Contract implements SmartContractInterface {
     }
 
     public async addPeriodProof(witnessProof: WitnessProofRequestInterface, prices: bigint[]): Promise<void> {
+        console.log("on-chain addPeriodProof call return:", 'notimplemented')
     }
 
     public async getTradersCount(): Promise<number> {
@@ -89,10 +90,13 @@ export class Contract implements SmartContractInterface {
     }
 
     public async getTrader(index: number|null): Promise<TraderResponseInterface> {
-        let result = await this.contract.methods.traders(index).call()
-        console.log('on-chain getTrader call return:', result)
+        let address: string = this.publicKey
+        if (index !== null) {
+            let result = await this.contract.methods.traders(index).call()
+            console.log('on-chain getTrader call return:', result)
 
-        const address: string = result as string
+            address = result as string
+        }
                 
         return {
             address: address,
@@ -111,7 +115,7 @@ export class Contract implements SmartContractInterface {
     }
 
     public async getPeriodProofs(address: string, index: number): Promise<PeriodProofResponseInterface> {
-        let result = await this.contract.methods.periodProofs(address, index).call()
+        let result = await this.contract.methods.getPeriodProof(address, index).call()
         console.log('on-chain getPeriodProofs call return:', result)
 
         return {
@@ -125,10 +129,6 @@ export class Contract implements SmartContractInterface {
             },
             prices: [BigInt(8888), BigInt(8889)],
         }
-    }
-
-    public async getPeriodProofsPage(address: string, page: number): Promise<PeriodProofResponseInterface[]> {
-        throw new MethodNotImplementedError()
     }
 
     public async getTimestampByBlockNumber(blockNumber: bigint): Promise<number> {

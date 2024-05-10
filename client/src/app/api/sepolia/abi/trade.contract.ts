@@ -6,7 +6,7 @@ export interface ContractInterface {
 }
 
 export let tradeContract: ContractInterface = {
-    address: '0x3b257c36fb3E214729B41Ac27cBf4DfB8b20f5DC',
+    address: '0x88A55f9DD6F76120e7463339735947F4fFD7C941',
     abi: [
       {
         "inputs": [
@@ -95,12 +95,44 @@ export let tradeContract: ContractInterface = {
             "internalType": "address",
             "name": "trader",
             "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "index",
+            "type": "uint256"
           }
         ],
-        "name": "getAllSignals",
+        "name": "getPeriodProof",
         "outputs": [
           {
             "components": [
+              {
+                "internalType": "uint256",
+                "name": "yield",
+                "type": "uint256"
+              },
+              {
+                "components": [
+                  {
+                    "internalType": "uint256[2]",
+                    "name": "pi_a",
+                    "type": "uint256[2]"
+                  },
+                  {
+                    "internalType": "uint256[2][2]",
+                    "name": "pi_b",
+                    "type": "uint256[2][2]"
+                  },
+                  {
+                    "internalType": "uint256[2]",
+                    "name": "pi_c",
+                    "type": "uint256[2]"
+                  }
+                ],
+                "internalType": "struct SPPS.Proof",
+                "name": "proof",
+                "type": "tuple"
+              },
               {
                 "internalType": "uint256",
                 "name": "blockNumber",
@@ -108,13 +140,13 @@ export let tradeContract: ContractInterface = {
               },
               {
                 "internalType": "string",
-                "name": "hash",
+                "name": "newBalanceHash",
                 "type": "string"
               }
             ],
-            "internalType": "struct SPPS.Signal[]",
+            "internalType": "struct SPPS.PeriodProof",
             "name": "",
-            "type": "tuple[]"
+            "type": "tuple"
           }
         ],
         "stateMutability": "view",

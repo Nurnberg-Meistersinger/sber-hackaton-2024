@@ -11,7 +11,6 @@ export interface SmartContractInterface {
     getTrader(index: number|null): Promise<TraderResponseInterface>
     getEmail(address: string): Promise<string>
     getPeriodProofs(address: string, index: number): Promise<PeriodProofResponseInterface>
-    getPeriodProofsPage(address: string, index: number): Promise<PeriodProofResponseInterface[]>
 
     getTimestampByBlockNumber(blockNumber: bigint): Promise<number>
 }

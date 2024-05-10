@@ -26,7 +26,6 @@ export class AppComponent implements OnInit {
   }
 
   private initKeys(): void {
-    // todo Maybe move to assets service if it works
     fetch("./assets/proving_key.bin").then( (response) => {
       return response.arrayBuffer();
     }).then( (b: ArrayBuffer) => {
