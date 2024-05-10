@@ -65,7 +65,7 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 ## 3. Technological Stack
 
-- **Frontend** is currently implemented as Angular-based static page, which inludes `Traders Verification Service` and `Clients Web-Service`, connects them with the `Off-chain Infrastructure` (backend service).
+- **Frontend** is currently implemented as Angular SPA, which inludes `Traders Verification Service` and `Clients Web-Service`. Also we use libraries like `@metamask/providers`, `crypto`, `wasmsnark` and `web3-eth-contract`.
 
 - **Off-chain Infrastructure** is partly implemented as a `Service Opertor` backend service, which generates ZK-Proofs using `ZK-SNARK` ciruits, written in **Circom**. We also decided to use **Groth16** as a main proving system for our circuits.
 
