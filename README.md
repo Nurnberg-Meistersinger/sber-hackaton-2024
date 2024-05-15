@@ -31,7 +31,7 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 **In the diagram below you can see a high-level overview of the entire service architecture:**
 
-![alt text](Assets/Architecture.jpg)
+![alt text](Assets/Architecture.png)
 
 ## 2. Technical Overview
 
@@ -39,33 +39,29 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 1. Traders register on the platform with their login, blockchain address and contact information.
 
-![alt text](Assets/Step-1.jpg)
+![alt text](Assets/Step-1.png)
 
 2. Trader creates several trading signals via **Traders Verification Service**, which sends the request into **blockchain** using the following template: `hash(asset, buy/sell, amount, nonce)`. Trade data (ticker, amount, trade direction) is inserted by Trader himself, all this data is concatenated and hashed. Resulting hash is stored on the blockchain with an associated timestamp.
 
-![alt text](Assets/Step-2.jpg)
+![alt text](Assets/Step-2.png)
 
-3. Service Operator sequentially aggregates all signals by a specific Trader and publishes them into SPPS smart contract storage.
+3. Service Operator sequentially aggregates all signals by a specific Trader and publishes them into SPPS smart contract storage.Once all necessary signals for a specific `time interval` are accounted, Trader sends the proving request into **Traders Verification Service**, which executes the proof generation in the backend **ZK-SNARK** proving system. ZK-SNARK protocol is used for proving that the trader knows preimages of signals’ hashes that correspond to the declared performance.
 
-![alt text](Assets/Step-3.jpg)
+![alt text](Assets/Step-3.png)
 
-4. Once all necessary signals for a specific `time interval` are accounted, Trader sends the proving request into **Traders Verification Service**, which executes the proof generation in the backend **ZK-SNARK** proving system. ZK-SNARK protocol is used for proving that the trader knows preimages of signals’ hashes that correspond to the declared performance.
+4. **ZK-SNARK** returns the resulting ZK Proof to **Traders Verification Service**, which publishes the received proof into blockchain and makes it visible for clients in **Client Web-Service**. Local frontend downloads signals' hashes and prices on associated timestamps from blockchain (public inputs of SNARK). After that, the frontend calculates zero knowledge proof with performance percent (output of SNARK). Proof and percent are stored on blockchain too. Now, any client can verify Trader’s proof using **Client Web-Service**, which connects user with the backend **ZK-SNARK** proving system.
 
-![alt text](Assets/Step-4.jpg)
+![alt text](Assets/Step-4.png)
 
-5. **ZK-SNARK** returns the resulting ZK Proof to **Traders Verification Service**, which publishes the received proof into blockchain and makes it visible for clients in **Client Web-Service**. Local frontend downloads signals' hashes and prices on associated timestamps from blockchain (public inputs of SNARK). After that, the frontend calculates zero knowledge proof with performance percent (output of SNARK). Proof and percent are stored on blockchain too.
+5. Finally, **Service Customers** can confidently purchase a subscription to new signals of profitable **Traders** to earn passive income!
 
-![alt text](Assets/Step-5.jpg)
-
-6. Now, any client can verify Trader’s proof using **Client Web-Service**, which connects user with the backend **ZK-SNARK** proving system.
-
-![alt text](Assets/Step-6.jpg)
+![alt text](Assets/Step-5.png)
 
 > _Such an architecture ensures that external observers don't understand which signals a Trader has made - it is private. What is more, all market data needed for performance calculation is taken from on-chain price oracle. So all signals’ data are stored on a chain and reliable cryptography is used for performance proving - it is trustless._
 
 ## 3. Technological Stack
 
-- **Frontend** is currently implemented as Angular SPA, which inludes `Traders Verification Service` and `Clients Web-Service`. Also we use libraries like `@metamask/providers`, `crypto`, `wasmsnark` and `web3-eth-contract`.
+- **Frontend** is currently implemented as Angular-based static page, which inludes `Traders Verification Service` and `Clients Web-Service`, connects them with the `Off-chain Infrastructure` (backend service).
 
 - **Off-chain Infrastructure** is partly implemented as a `Service Opertor` backend service, which generates ZK-Proofs using `ZK-SNARK` ciruits, written in **Circom**. We also decided to use **Groth16** as a main proving system for our circuits.
 
@@ -75,13 +71,15 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 > _Since our prototype implements only the simplest functionality, but at the same time has the potential to become a full-fledged service in the Sber Ecosystem, in this section we will outline the main directions for the further development of our solution._
 
+![alt text](Assets/Future-Track.jpg)
+
 1. **Building `Service Operator` as a full-fledged high-load backend service**, which will be integrated with the financial infrastructure of Sber: payment services, mobile application, online-broker service, insurance company, etc. We predict great interest from both bank clients and subsidiary services of the ecosystem, since our service allows to offer a qualitatively new product that has no competitors and alternatives.
 
-2. **Integration of the service with the Sber ecosystem itself** - to attract competent developers and a huge clients/investors base.
+2. **Integrating the service with Sber Ecosystem itself** - to attract competent developers and a huge clients/investors base.
 
-3. **Expansion of the institutional investment market** - by expanding the functionality of the service: introducing the ability to confirm profitability not only for on-chain, but also off-chain operations. This will significantly reduce the financial barrier to entry for small suppliers of investment products and turn the service into an aggregator-intermediary between clients and small, uncoordinated investment companies.
+3. **Expansion to off-chain operations** - by expanding the functionality of the service: introducing the ability to confirm profitability not only for on-chain, but also off-chain operations. This will significantly reduce the financial barrier to entry for small suppliers of investment products and turn the service into an aggregator-intermediary between clients and small, uncoordinated investment companies.
 
-4. **Development of on-chain infrastructure on Siberium Chain**, which is necessary for the comfortable development of `On-chain Infrastructure` of our service: Blockchain Oracles, Web-3 Libraries, Nodes Infrastructure, Explorers, SDKs.
+4. **Developing on-chain infrastructure for Siberium Chain**, which is necessary for the comfortable development of `On-chain Infrastructure` of our service: Blockchain Oracles, Web-3 Libraries, Nodes Infrastructure, Explorers, SDKs.
 
 ## 5. Deployment Addresses and TXs
 
