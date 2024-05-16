@@ -22,5 +22,11 @@ module.exports = {
         ? [process.env.PRIVATE_KEY]
         : { mnemonic: 'test test test test test junk' },
     },
+    siberium: {
+      url: `https://rpc.test.siberium.net`,
+      accounts: process.env.PRIVATE_KEY
+        ? [process.env.PRIVATE_KEY]
+        : { mnemonic: 'test test test test test junk' },
+    },
   },
 };
