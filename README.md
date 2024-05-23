@@ -4,8 +4,7 @@
 
 ## 1. General Overview
 
-- Watch [Demo: `TODO`] to explore workflow of the service.
-- Read [Documentation: `TODO`] for technical details and overview of used solutions.
+- Watch [[Demo Video](TODO)] to explore workflow of the service.
 
 According to [CoinMarketCap data](https://coinmarketcap.com/currencies/volume/24-hour/), as of `04/19/2024`, the total daily trading volume for the cryptocurrencies `BTC` and `ETH` amounted to more than `$60b`. This means that the crypto trading market today is one of the largest in the entire Web3 industry.
 
@@ -45,11 +44,11 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 ![alt text](Assets/Step-2.png)
 
-3. Service Operator sequentially aggregates all signals by a specific Trader and publishes them into SPPS smart contract storage.Once all necessary signals for a specific `time interval` are accounted, Trader sends the proving request into **Traders Verification Service**, which executes the proof generation in the backend **ZK-SNARK** proving system. ZK-SNARK protocol is used for proving that the trader knows preimages of signals’ hashes that correspond to the declared performance.
+3. **Service Operator** sequentially aggregates all signals created by a specific Trader. Once all necessary signals for a specific time interval are accounted, **Service Operator** executes ZK Proof generation in the backend **ZK-SNARK** proving system. ZK-SNARK protocol is used for proving that the trader knows preimages of signals’ hashes that correspond to the declared `performance rate`. After ZK Proof is generated, it is published by **Service Operator** into **SPPS smart contract**, so everyone could independently double check it.
 
 ![alt text](Assets/Step-3.png)
 
-4. **ZK-SNARK** returns the resulting ZK Proof to **Traders Verification Service**, which publishes the received proof into blockchain and makes it visible for clients in **Client Web-Service**. Local frontend downloads signals' hashes and prices on associated timestamps from blockchain (public inputs of SNARK). After that, the frontend calculates zero knowledge proof with performance percent (output of SNARK). Proof and percent are stored on blockchain too. Now, any client can verify Trader’s proof using **Client Web-Service**, which connects user with the backend **ZK-SNARK** proving system.
+4. **ZK-SNARK** returns the resulting ZK Proof to **Traders Verification Service**, which makes the received proof visible for clients in **Client Web-Service**. In case if **Client** doesn't trust a visible proof, he can verify its correctness by himself - he just needs to make a request into blockchain, which will return the evidence that proof has been successfully verified.
 
 ![alt text](Assets/Step-4.png)
 
@@ -73,9 +72,9 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 ![alt text](Assets/Future-Track.jpg)
 
-1. **Building `Service Operator` as a full-fledged high-load backend service**, which will be integrated with the financial infrastructure of Sber: payment services, mobile application, online-broker service, insurance company, etc. We predict great interest from both bank clients and subsidiary services of the ecosystem, since our service allows to offer a qualitatively new product that has no competitors and alternatives.
+1. **Building `Service Operator` as a full-fledged high-load backend service**, which will have it's own Database Infrastructure and Server Infrastructure. Additionally, current Proof-of-Concept requires from Service Operator to maintain its own Data caching and logging Methodology, as soon as DB responses processing Methodology.
 
-2. **Integrating the service with Sber Ecosystem itself** - to attract competent developers and a huge clients/investors base.
+2. **Integrating the service with Sber Ecosystem** by connecting SPPS with the financial infrastructure of Sber: payment services, mobile application, online-broker service, insurance company, etc. We predict great interest from both bank clients and subsidiary services of the ecosystem, since our service allows to offer a qualitatively new product that has no competitors and alternatives.
 
 3. **Expansion to off-chain operations** - by expanding the functionality of the service: introducing the ability to confirm profitability not only for on-chain, but also off-chain operations. This will significantly reduce the financial barrier to entry for small suppliers of investment products and turn the service into an aggregator-intermediary between clients and small, uncoordinated investment companies.
 
@@ -83,9 +82,17 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 ## 5. Deployment Addresses and TXs
 
-### Sepolia Testnet
+`[TODO]` ### Sepolia Testnet
 
-### Siberium Testnet
+- **Sepolia Testnet Explorer** - [Link](https://sepolia.etherscan.io/address/TODO)
+
+- **Contract Address** -
+
+`[TODO]` ### Siberium Testnet
+
+- **Siberium Testnet Explorer** - [Link](https://explorer.test.siberium.net/address/TODO)
+
+- **Contract Address** -
 
 ## 6. Installation & Usage
 
@@ -94,7 +101,3 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 ### Compiling
 
 ### Testing
-
-### Deployment (Sepolia Testnet)
-
-### Deployment (Siberium Testnet)
