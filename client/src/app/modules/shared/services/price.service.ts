@@ -25,4 +25,8 @@ export class PriceService {
   public getBtcPriceValue(): number {
     return this.btcPrice$.getValue()
   }
+
+  public getBtcPriceByBlockNumber(blockNumber: bigint): number {
+    return 60000
+  }
 }

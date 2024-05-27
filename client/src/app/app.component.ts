@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import {HttpClient} from '@angular/common/http';
 
 import { PriceService } from './modules/shared/services/price.service';
 import SharedConsts from "./core/consts/shared-consts";
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +20,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private priceService: PriceService,
+    private http: HttpClient,
   ) {}
 
   ngOnInit(): void {
@@ -46,16 +49,36 @@ export class AppComponent implements OnInit {
   }
 
   private initPriceOracle(): void {
-    let btcBasePrice = 60000;
-
-    this.priceService.nextBtcPrice(btcBasePrice * (10 ** SharedConsts.maxDecimalDigits))
+    this.coinMarketCapPrice().subscribe((btcPrice: number) => {
+        this.priceService.nextBtcPrice((btcPrice))
+      }
+    )
 
     setInterval(() => {
-      let diff = Math.floor((Math.random()*100)-50)
-  
-      this.priceService.nextBtcPrice((btcBasePrice+diff) * (10 ** SharedConsts.maxDecimalDigits))
-   }, 2000);
+      this.coinMarketCapPrice().subscribe((btcPrice: number) => {
+          this.priceService.nextBtcPrice((btcPrice))
+        }
+      )
+
+   }, 10000);
 
    this.priceService.subscribeToBtcPrice()
+  }
+
+  private coinMarketCapPrice(): Observable<number> {
+    // Note: CoinMarketCap API Proxy to workaround CORS problems
+    const url = "http://localhost:5000/cryptocurrency/quotes/latest"
+    const btcParams = "slug=bitcoin&convert=USD"
+
+    return this.http.get(
+      url+"?"+btcParams,
+      {headers: {"Accept": "application/json"}}
+    ).pipe(
+        map(
+          (response: Object) => {
+            return (response["data"]["1"]["quote"]["USD"]["price"]) * (10 ** SharedConsts.maxDecimalDigits)
+          }
+        )
+    )
   }
 }

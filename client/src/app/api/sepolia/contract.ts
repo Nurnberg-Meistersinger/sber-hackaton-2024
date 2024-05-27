@@ -30,44 +30,35 @@ export class Contract implements SmartContractInterface {
     }
 
     public async newTrader(email: string): Promise<void> {
-        let result = await this.contract.methods.newTrader(email).send({
+        return await this.contract.methods.newTrader(email).send({
             from: this.publicKey,
         })
-        console.log("on-chain newTrader send return:", result)
-
-        return result
     }
 
     public async addSignal(hash: string): Promise<void> {
-        let result = await this.contract.methods.addSignal(hash).send({
+        await this.contract.methods.addSignal(hash).send({
             from: this.publicKey,
         })
-        console.log("on-chain addSignal send return:", result)
-
-        return
     }
 
     public async getTradeLen(): Promise<number> {
         let result = await this.contract.methods.getTradeLen(this.publicKey).call()
-        console.log("on-chain getTradeLen call return:", result)
 
         return Number(result)
     }
 
     public async getSignal(address: string, index: number): Promise<SignalResponseInterface> {
         let result = await this.contract.methods.getSignal(address, index).call()
-        console.log("on-chain getSignal call return:", result)
 
         return {
             blockNumber: BigInt(result.blockNumber),
             hash: result.hash,
-            price: BigInt(index%2 === 0 ? 66560000000000 : 66590000000000)
+            price: BigInt(0),
         }
     }
 
     public async getProofLen(address: string): Promise<number> {
         let result = await this.contract.methods.getProofLen(address).call()
-        console.log("on-chain getProofLen call return:", result)
 
         return Number(result)
     }
@@ -78,13 +69,26 @@ export class Contract implements SmartContractInterface {
         return proof.newBalanceHash
     }
 
-    public async addPeriodProof(witnessProof: WitnessProofRequestInterface, prices: bigint[]): Promise<void> {
-        console.log("on-chain addPeriodProof call return:", 'notimplemented')
+    public async addPeriodProof(witnessProof: WitnessProofRequestInterface, blockNumber: bigint): Promise<void> {
+        await this.contract.methods.addPeriodProof(
+            Number(witnessProof.publicSignals[1]),
+            {
+                'pi_a': [BigInt(witnessProof.pi_a[0]), BigInt(witnessProof.pi_a[1])],
+                'pi_b': [
+                    [BigInt(witnessProof.pi_b[0][0]), BigInt(witnessProof.pi_b[0][1])],
+                    [BigInt(witnessProof.pi_b[1][0]), BigInt(witnessProof.pi_b[1][1])],
+                ],
+                'pi_c': [BigInt(witnessProof.pi_c[0]), BigInt(witnessProof.pi_c[1])],
+            },
+            witnessProof.publicSignals[0],
+            blockNumber,
+        ).send({
+            from: this.publicKey,
+        })
     }
 
     public async getTradersCount(): Promise<number> {
         let result = await this.contract.methods.getTradersCount().call()
-        console.log("on-chain getTradersCount call return:", result)
 
         return Number(result)
     }
@@ -93,9 +97,16 @@ export class Contract implements SmartContractInterface {
         let address: string = this.publicKey
         if (index !== null) {
             let result = await this.contract.methods.traders(index).call()
-            console.log('on-chain getTrader call return:', result)
 
             address = result as string
+        }
+
+        let creationBlockNumber = BigInt(0)
+        try {
+            let signal = await this.getSignal(address, 0)
+            creationBlockNumber = signal.blockNumber
+        } catch (err) {
+            console.log('creation block number: no signals for trader')
         }
                 
         return {
@@ -103,38 +114,52 @@ export class Contract implements SmartContractInterface {
             email: await this.getEmail(address),
             signalsCount: 0,
             proofsCount: await this.getProofLen(address),
-            creationBlockNumber: BigInt(10),
+            creationBlockNumber: creationBlockNumber,
         }
     }
 
     public async getEmail(address: string): Promise<string> {
         let result = await this.contract.methods.metaData(address).call()
-        console.log('on-chain getEmail call return:', result)
 
         return result as string
     }
 
     public async getPeriodProofs(address: string, index: number): Promise<PeriodProofResponseInterface> {
-        let result = await this.contract.methods.getPeriodProof(address, index).call()
-        console.log('on-chain getPeriodProofs call return:', result)
+        // Note: contract does not return block number right now, so get block number of second signal's of current proof
+        let blockNumber = BigInt(0)
+        try {
+            let signal = await this.getSignal(address, index*2+1)
+            blockNumber = signal.blockNumber
+        } catch (err) {
+            console.log('get period proofs: no signals for proof')
+        }
 
-        return {
+        let result = await this.contract.methods.getPeriodProof(address, index).call()
+
+        let periodProof = {
             y: Number(result.yield),
             newBalanceHash: result.newBalanceHash as string,
-            blockNumber: BigInt(result.blockNumber),
+            blockNumber: result.blockNumber,
             proof: {
-                pi_a: result.proof['pi_a'],
-                pi_b: result.proof["pi_b"],
-                pi_c: result.proof['pi_c'],
+                pi_a: result.proof['pi_a'].map((x: bigint) => x.toString()),
+                pi_b: result.proof["pi_b"].map((x: bigint[]) => x.map((y: bigint) => y.toString())),
+                pi_c: result.proof['pi_c'].map((x: bigint) => x.toString()),
             },
-            prices: [BigInt(8888), BigInt(8889)],
+            prices: [BigInt(60000000000000), BigInt(60000000000000)],
         }
+
+        return periodProof
     }
 
     public async getTimestampByBlockNumber(blockNumber: bigint): Promise<number> {
-        let result = 1713661576
-        console.log('on-chain getTimestampByBlockNumber call return:', result)
+        let result = await this.web3.eth.getBlock(blockNumber)
 
-        return result
+        return Number(result.timestamp)
+    }
+
+    public async getCurrentBlockNumber(): Promise<bigint> {
+        let result = await this.web3.eth.getBlockNumber()
+
+        return BigInt(result)
     }
 }

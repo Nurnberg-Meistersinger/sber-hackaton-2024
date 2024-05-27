@@ -42,7 +42,7 @@ export class Contract implements SmartContractInterface {
         return "44"
     }
 
-    public async addPeriodProof(witnessProof: WitnessProofRequestInterface, prices: bigint[]): Promise<void> {
+    public async addPeriodProof(witnessProof: WitnessProofRequestInterface, blockNumber: bigint): Promise<void> {
     }
 
     public async getTradersCount(): Promise<number> {
@@ -79,6 +79,10 @@ export class Contract implements SmartContractInterface {
 
     public async getTimestampByBlockNumber(blockNumber: bigint): Promise<number> {
         return 1713661576
+    }
+
+    public async getCurrentBlockNumber(): Promise<bigint> {
+        return BigInt(12345678)
     }
 
     private removeZeros(hash: Buffer): string {

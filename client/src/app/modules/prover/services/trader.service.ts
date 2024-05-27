@@ -14,6 +14,7 @@ import { ProofItem as SignalProofItem } from '../models/proof.model';
 import { ProofModel } from '../models/proof.model';
 import { ProofModel as ZkProofModel } from 'src/app/modules/shared/models/proof.model';
 import { SignalModel } from '../models/signal.model';
+import { PriceService } from '../../shared/services/price.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,7 @@ export class TraderService {
 
   constructor(
     @Inject('SmartContractInterface') private contract: SmartContractInterface,
+    private priceService: PriceService,
     private storageService: StorageService,
     private walletService: WalletService,
     private zkService: ZkService
@@ -105,7 +107,7 @@ export class TraderService {
             let signals = (signalsMap[this.walletService.getAddress()] || [])
 
             let newSignal = new SignalModel(signals.length, signal.currency, signal.amount, signal.nonce, signal.action)
-            newSignal.price = MathHelper.decimalDigitsNumber(MathHelper.bigIntToFloorNumber(result.newSignal.price))
+            newSignal.price = this.priceService.getBtcPriceValue()
 
             signals.push(newSignal)
 

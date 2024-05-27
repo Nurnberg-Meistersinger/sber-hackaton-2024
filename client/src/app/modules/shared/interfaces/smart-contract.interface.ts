@@ -5,7 +5,7 @@ export interface SmartContractInterface {
     getSignal(address: string, index: number): Promise<SignalResponseInterface>
     getProofLen(address: string): Promise<number>
     getPrevBalanceHash(address: string, index: number): Promise<string>
-    addPeriodProof(witnessProof: WitnessProofRequestInterface, prices: bigint[]): Promise<void>
+    addPeriodProof(witnessProof: WitnessProofRequestInterface, blockNumber: bigint): Promise<void>
 
     getTradersCount(): Promise<number>
     getTrader(index: number|null): Promise<TraderResponseInterface>
@@ -13,6 +13,7 @@ export interface SmartContractInterface {
     getPeriodProofs(address: string, index: number): Promise<PeriodProofResponseInterface>
 
     getTimestampByBlockNumber(blockNumber: bigint): Promise<number>
+    getCurrentBlockNumber(): Promise<bigint>
 }
 
 export interface TraderResponseInterface {

@@ -12,7 +12,8 @@ export class WitnessService {
   constructor() { }
 
   public async prove(witnessProve: WitnessProve): Promise<WitnessProveResult> {
-    return (window as any).witness(witnessProve)
+    let result = (window as any).witness(witnessProve)
+    return result
   }
 
   public async verify(verificationKey: any, verifyModel: WitnessVerify, verifyProofModel: WitnessVerifyProof): Promise<boolean> {

@@ -30,6 +30,7 @@
     "@ngx-pwa/local-storage": "^17.0.0",
     "@pythnetwork/client": "^2.21.0",
     "@types/crypto-js": "^4.2.2",
+    "axios": "^1.7.2",
     "big-integer": "^1.6.52",
     "bn.js": "^5.2.1",
     "bootstrap": "^5.3.3",

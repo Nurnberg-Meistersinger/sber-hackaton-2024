@@ -12,6 +12,7 @@ import { SharedModule } from './modules/shared/shared.module';
 import { HomeComponent } from './core/components/home/home.component'
 import { Contract } from './api/sepolia/contract';
 import { MetaMaskProvider } from './core/wallet-providers/metamask.provider';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { MetaMaskProvider } from './core/wallet-providers/metamask.provider';
     SharedModule.withProviders(Contract, MetaMaskProvider),
     FontAwesomeModule,
     NgxSpinnerModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
