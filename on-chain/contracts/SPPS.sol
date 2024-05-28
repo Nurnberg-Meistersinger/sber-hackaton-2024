@@ -10,6 +10,7 @@ contract SPPS {
     
     struct Signal {
         uint blockNumber;
+        uint assetPrice;
         string hash;
     }
     
@@ -17,6 +18,7 @@ contract SPPS {
         uint yield;
         Proof proof;
         uint blockNumber;
+        uint assetPrice;
         string newBalanceHash; // TODO add period
     }
     
@@ -31,13 +33,19 @@ contract SPPS {
         metaData[msg.sender] = _metaData;
     }
     
-    function addSignal(string calldata newSinal) external {
-        Signal memory sig = Signal(block.number, newSinal);
+    function addSignal(string calldata newSinal, uint256 assetPrice) external {
+        Signal memory sig = Signal(block.number, assetPrice, newSinal);
         signals[msg.sender].push(sig);
     }
     
-    function addPeriodProof(uint256 yield, Proof calldata proof, string calldata balanceHash, uint256 blockNumber) external {
-        PeriodProof memory pr = PeriodProof(yield, proof, blockNumber, balanceHash);
+    function addPeriodProof(
+        uint256 yield, 
+        Proof calldata proof, 
+        string calldata balanceHash, 
+        uint256 blockNumber, 
+        uint256 assetPrice
+    ) external {
+        PeriodProof memory pr = PeriodProof(yield, proof, blockNumber, assetPrice, balanceHash);
         periodProofs[msg.sender].push(pr);
     }
     
