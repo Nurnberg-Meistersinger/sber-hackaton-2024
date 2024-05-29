@@ -35,8 +35,8 @@ export class Contract implements SmartContractInterface {
         })
     }
 
-    public async addSignal(hash: string): Promise<void> {
-        await this.contract.methods.addSignal(hash).send({
+    public async addSignal(hash: string, price: bigint): Promise<void> {
+        await this.contract.methods.addSignal(hash, price).send({
             from: this.publicKey,
         })
     }
@@ -53,7 +53,7 @@ export class Contract implements SmartContractInterface {
         return {
             blockNumber: BigInt(result.blockNumber),
             hash: result.hash,
-            price: BigInt(0),
+            price: Number(result.assetPrice),
         }
     }
 
@@ -69,7 +69,7 @@ export class Contract implements SmartContractInterface {
         return proof.newBalanceHash
     }
 
-    public async addPeriodProof(witnessProof: WitnessProofRequestInterface, blockNumber: bigint): Promise<void> {
+    public async addPeriodProof(witnessProof: WitnessProofRequestInterface, blockNumber: bigint, price: bigint): Promise<void> {
         await this.contract.methods.addPeriodProof(
             Number(witnessProof.publicSignals[1]),
             {
@@ -82,6 +82,7 @@ export class Contract implements SmartContractInterface {
             },
             witnessProof.publicSignals[0],
             blockNumber,
+            price
         ).send({
             from: this.publicKey,
         })
@@ -125,15 +126,6 @@ export class Contract implements SmartContractInterface {
     }
 
     public async getPeriodProofs(address: string, index: number): Promise<PeriodProofResponseInterface> {
-        // Note: contract does not return block number right now, so get block number of second signal's of current proof
-        let blockNumber = BigInt(0)
-        try {
-            let signal = await this.getSignal(address, index*2+1)
-            blockNumber = signal.blockNumber
-        } catch (err) {
-            console.log('get period proofs: no signals for proof')
-        }
-
         let result = await this.contract.methods.getPeriodProof(address, index).call()
 
         let periodProof = {
@@ -145,7 +137,7 @@ export class Contract implements SmartContractInterface {
                 pi_b: result.proof["pi_b"].map((x: bigint[]) => x.map((y: bigint) => y.toString())),
                 pi_c: result.proof['pi_c'].map((x: bigint) => x.toString()),
             },
-            prices: [BigInt(60000000000000), BigInt(60000000000000)],
+            prices: [Number(result.assetPrice)],
         }
 
         return periodProof
@@ -154,7 +146,7 @@ export class Contract implements SmartContractInterface {
     public async getTimestampByBlockNumber(blockNumber: bigint): Promise<number> {
         let result = await this.web3.eth.getBlock(blockNumber)
 
-        return Number(result.timestamp)
+        return Number(result.timestamp) * 1000
     }
 
     public async getCurrentBlockNumber(): Promise<bigint> {

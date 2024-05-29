@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import { PriceService } from './modules/shared/services/price.service';
 import SharedConsts from "./core/consts/shared-consts";
 import { Observable, map } from 'rxjs';
+import MathHelper from './core/helpers/math.helper';
 
 @Component({
   selector: 'app-root',
@@ -76,7 +77,7 @@ export class AppComponent implements OnInit {
     ).pipe(
         map(
           (response: Object) => {
-            return (response["data"]["1"]["quote"]["USD"]["price"]) * (10 ** SharedConsts.maxDecimalDigits)
+            return MathHelper.floorNumber((response["data"]["1"]["quote"]["USD"]["price"])) * (10 ** SharedConsts.maxDecimalDigits)
           }
         )
     )

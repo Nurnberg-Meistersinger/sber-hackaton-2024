@@ -35,11 +35,11 @@ export class ZkService {
     const a = await this.contract.getSignal(address, len - 2)
     const b = await this.contract.getSignal(address, len - 1)
 
-    const price_a = MathHelper.floorNumber(proofModel.proofs[0].price)
-    const price_b = MathHelper.floorNumber(proofModel.proofs[1].price)
-
-    const currentBlockNumber = await this.contract.getCurrentBlockNumber()
-    const price_now = MathHelper.floorNumber(this.priceService.getBtcPriceByBlockNumber(currentBlockNumber))
+    // const price_a = proofModel.proofs[0].price
+    // const price_b = proofModel.proofs[1].price
+    const price_a = a.price
+    const price_b = b.price
+    const price_now = this.priceService.getBtcPriceValue()
 
     const proofLen = await this.contract.getProofLen(address)
 
@@ -55,12 +55,20 @@ export class ZkService {
       [proofModel.usdBalance, proofModel.btcBalance],
       previousBalanceHash,
       [a.hash, b.hash],
-      [MathHelper.removeDecimalDigitsNumber(price_a), MathHelper.removeDecimalDigitsNumber(price_b), price_now]
+      [
+        MathHelper.removeDecimalDigitsNumber(price_a),
+        MathHelper.removeDecimalDigitsNumber(price_b),
+        MathHelper.removeDecimalDigitsNumber(price_now),
+      ]
     )
 
     const proof = await this.witnessService.prove(input)
     
-    await this.contract.addPeriodProof(proof, currentBlockNumber)
+    await this.contract.addPeriodProof(
+      proof,
+      await this.contract.getCurrentBlockNumber(),
+      BigInt(MathHelper.decimalDigitsNumber(MathHelper.removeDecimalDigitsNumber(price_now)))
+    )
   }
 
   public verify(address: string, proofId: number): Observable<boolean> {
@@ -91,9 +99,9 @@ export class ZkService {
     const a = await this.contract.getSignal(address, 2 * proofId)
     const b = await this.contract.getSignal(address, 2 * proofId + 1)
 
-    const price_a = MathHelper.bigIntToFloorNumber(a.price)
-    const price_b = MathHelper.bigIntToFloorNumber(b.price)
-    const price_now = MathHelper.floorNumber(this.priceService.getBtcPriceByBlockNumber(periodProof.blockNumber))
+    const price_a = a.price
+    const price_b = b.price
+    const price_now = periodProof.prices[0]
     
     let previousBalanceHash = '639470893622803446635721399483204517617715645899470263648676575355455357367'
     if (proofId !== 0) {
@@ -105,8 +113,8 @@ export class ZkService {
       periodProof.y,
       previousBalanceHash,
       [a.hash, b.hash],
-      [price_a, price_b],
-      price_now
+      [MathHelper.removeDecimalDigitsNumber(price_a), MathHelper.removeDecimalDigitsNumber(price_b)],
+      MathHelper.removeDecimalDigitsNumber(price_now)
     )
 
     return this.witnessService.verify(

@@ -86,7 +86,6 @@ export class TradersService {
       ))
     }
 
-
     tradersSubject.next(traders)
   }
 

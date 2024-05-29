@@ -71,7 +71,6 @@ export class TraderComponent implements OnInit {
       (error: any) => {
         proof.setState(false)
         this.toastr.error('Something went wrong')
-        console.log('verify period error: ', error)
       }
     )
   }

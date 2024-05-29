@@ -6,7 +6,7 @@ export interface ContractInterface {
 }
 
 export let tradeContract: ContractInterface = {
-    address: '0x5e4A048296BCDd54638be9236862F504b5d30073',
+    address: '0xb2401F9d31a9cb37c3bd7D6DD6a76D6afA722af0',
     abi: [
       {
         "inputs": [
@@ -46,6 +46,11 @@ export let tradeContract: ContractInterface = {
             "internalType": "uint256",
             "name": "blockNumber",
             "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetPrice",
+            "type": "uint256"
           }
         ],
         "name": "addPeriodProof",
@@ -59,6 +64,11 @@ export let tradeContract: ContractInterface = {
             "internalType": "string",
             "name": "newSinal",
             "type": "string"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetPrice",
+            "type": "uint256"
           }
         ],
         "name": "addSignal",
@@ -139,6 +149,11 @@ export let tradeContract: ContractInterface = {
                 "type": "uint256"
               },
               {
+                "internalType": "uint256",
+                "name": "assetPrice",
+                "type": "uint256"
+              },
+              {
                 "internalType": "string",
                 "name": "newBalanceHash",
                 "type": "string"
@@ -191,6 +206,11 @@ export let tradeContract: ContractInterface = {
               {
                 "internalType": "uint256",
                 "name": "blockNumber",
+                "type": "uint256"
+              },
+              {
+                "internalType": "uint256",
+                "name": "assetPrice",
                 "type": "uint256"
               },
               {
@@ -319,6 +339,11 @@ export let tradeContract: ContractInterface = {
             "type": "uint256"
           },
           {
+            "internalType": "uint256",
+            "name": "assetPrice",
+            "type": "uint256"
+          },
+          {
             "internalType": "string",
             "name": "newBalanceHash",
             "type": "string"
@@ -345,6 +370,11 @@ export let tradeContract: ContractInterface = {
           {
             "internalType": "uint256",
             "name": "blockNumber",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "assetPrice",
             "type": "uint256"
           },
           {

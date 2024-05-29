@@ -94,7 +94,7 @@ export class TraderService {
           throw new Error('You need generate proof for current signals')
         }
       }),
-      mergeMap(() => this.contract.addSignal(hash)),
+      mergeMap(() => this.contract.addSignal(hash, BigInt(this.priceService.getBtcPriceValue()))),
       mergeMap(() => forkJoin({
           map: this.getSignalsMap(),
           newSignal: this.getSignalsMap().pipe(
@@ -107,7 +107,7 @@ export class TraderService {
             let signals = (signalsMap[this.walletService.getAddress()] || [])
 
             let newSignal = new SignalModel(signals.length, signal.currency, signal.amount, signal.nonce, signal.action)
-            newSignal.price = this.priceService.getBtcPriceValue()
+            newSignal.price = result.newSignal.price
 
             signals.push(newSignal)
 
