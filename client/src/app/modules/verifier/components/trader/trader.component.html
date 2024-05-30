@@ -5,7 +5,7 @@
 </div>
 
 <ng-template #loadingTmpl>
-    <ngx-spinner [bdColor]="'#eeeeee'" [color]="'#000000'"></ngx-spinner>
+    <ngx-spinner [bdColor]="'#6c757d'" [color]="'#000000'" type="ball-scale-multiple"></ngx-spinner>
 </ng-template>
 
 <ng-template #loadedTmpl>
@@ -40,7 +40,7 @@
             </table>
         </div>
         <div class="col-xl-6">
-            <img class="w-100 p-5" src="{{trader.proof.length >= 1 ? 'assets/green.svg' : 'assets/red.svg'}}">
+            <img class="w-100 p-5" src="{{trader.proof.length >= 1 ? 'assets/green' + (trader.id%4+1) + '.svg' : 'assets/red' + (trader.id%4+1) + '.svg'}}">
         </div>
     </div>
     <div class="row align-items-center m-1 w-100">

@@ -50,15 +50,25 @@ export class AppComponent implements OnInit {
   }
 
   private initPriceOracle(): void {
-    this.coinMarketCapPrice().subscribe((btcPrice: number) => {
+    // Note: in case price API does not work
+    let randomBtcPriceFunc = () => {
+      let btcPrice = 68000 + MathHelper.floorNumber(Math.random() * 30)
+      this.priceService.nextBtcPrice((btcPrice * (10 ** SharedConsts.maxDecimalDigits)))
+    }
+
+    this.coinMarketCapPrice().subscribe(
+      (btcPrice: number) => {
         this.priceService.nextBtcPrice((btcPrice))
-      }
+      },
+      randomBtcPriceFunc
     )
 
     setInterval(() => {
-      this.coinMarketCapPrice().subscribe((btcPrice: number) => {
+      this.coinMarketCapPrice().subscribe(
+        (btcPrice: number) => {
           this.priceService.nextBtcPrice((btcPrice))
-        }
+        },
+        randomBtcPriceFunc
       )
 
    }, 10000);

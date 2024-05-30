@@ -106,7 +106,7 @@
                             {{strategy.date | timeago}}
                         </td>
                         <td class="text-center">
-                            <img src="{{ strategy.avgProfitPerMonth >= 0 ? 'assets/green.svg' : 'assets/red.svg' }}">
+                            <img src="{{ strategy.avgProfitPerMonth >= 0 ? 'assets/green' + (strategy.id%4+1) + '.svg' : 'assets/red' + (strategy.id%4+1) + '.svg' }}">
                         </td>
                         <td class="text-center pointer-cursor" (click)="verifyTrader(strategy);$event.stopPropagation()">
                             <ng-container *ngIf="strategy.state === 'success'">

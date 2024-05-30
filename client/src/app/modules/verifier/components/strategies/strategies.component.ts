@@ -40,9 +40,15 @@ export class StrategiesComponent implements OnInit {
 
   private initStrategies(): void {
     this.tradersService.getTraders().subscribe(
-      (strategies: StrategyModel[]) => {
-        this.strategies = strategies
-      }
+      (strategies: StrategyModel) => {
+        if (!this.strategies) {
+          this.strategies = []
+        }
+
+        this.strategies.push(strategies)
+      },
+      undefined,
+      () => { this.strategies = []}
     )
   }
 

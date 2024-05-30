@@ -6,7 +6,7 @@ export interface ContractInterface {
 }
 
 export let tradeContract: ContractInterface = {
-    address: '0xb2401F9d31a9cb37c3bd7D6DD6a76D6afA722af0',
+    address: '0x4d389dA3786036ee0b9aba8E4B99891a925d88D0',
     abi: [
       {
         "inputs": [
