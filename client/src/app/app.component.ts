@@ -77,17 +77,15 @@ export class AppComponent implements OnInit {
   }
 
   private coinMarketCapPrice(): Observable<number> {
-    // Note: CoinMarketCap API Proxy to workaround CORS problems
-    const url = "http://localhost:5000/cryptocurrency/quotes/latest"
-    const btcParams = "slug=bitcoin&convert=USD"
+    const url = "https://api.coinbase.com/v2/prices/BTC-USD/buy"
 
     return this.http.get(
-      url+"?"+btcParams,
+      url,
       {headers: {"Accept": "application/json"}}
     ).pipe(
         map(
           (response: Object) => {
-            return MathHelper.floorNumber((response["data"]["1"]["quote"]["USD"]["price"])) * (10 ** SharedConsts.maxDecimalDigits)
+            return MathHelper.floorNumber((response["data"]["amount"])) * (10 ** SharedConsts.maxDecimalDigits)
           }
         )
     )

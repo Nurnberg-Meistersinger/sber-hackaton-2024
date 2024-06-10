@@ -63,8 +63,16 @@ export class TradersService {
       return
     }
 
+    let allTradersAsync: Promise<TraderModel>[] = []
     for (let i = 0; i < tradersCount; i++) {
-      const traderModel = await this.getTraderModel(i)
+      allTradersAsync.push(this.getTraderModel(i))
+    }
+
+    let allTraders = await Promise.all(allTradersAsync)
+    let sortedTraders = allTraders.sort((x, y) => x.id < y.id ? -1 : 1);
+
+    for (let i = 0; i < tradersCount; i++) {
+      const traderModel = sortedTraders[i]
 
       const createdDate = traderModel.date
       const initBalance = MathHelper.decimalDigitsNumber(SharedConsts.initialUsdBalance)
