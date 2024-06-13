@@ -82,22 +82,16 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 ## 5. Deployment Addresses and TXs
 
-`[TODO]` ### Sepolia Testnet
+### Sepolia Testnet
 
 - **Sepolia Testnet Explorer** - [Link](https://sepolia.etherscan.io/address/TODO)
 
-- **Contract Address** -
+- **Contract Address** - 0x6b8930a83aa58E0893206088c56E04deb983879E
 
-`[TODO]` ### Siberium Testnet
+### Siberium Testnet
 
 - **Siberium Testnet Explorer** - [Link](https://explorer.test.siberium.net/address/TODO)
 
-- **Contract Address** -
+- **Contract Address** - 0xbb8c8E79c34C6420716A6937bF7E3B9226Cc81f5
 
-## 6. Installation & Usage
-
-### Installation
-
-### Compiling
-
-### Testing
+- **UI sandbox** - https://nurnberg-meistersinger.github.io/sber-hackaton-2024/

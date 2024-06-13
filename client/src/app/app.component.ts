@@ -71,7 +71,7 @@ export class AppComponent implements OnInit {
         randomBtcPriceFunc
       )
 
-   }, 10000);
+   }, 3000);
 
    this.priceService.subscribeToBtcPrice()
   }
