@@ -84,14 +84,16 @@ To prove competence, a trader must demonstrate the ability to maintain positive 
 
 ### Sepolia Testnet
 
-- **Sepolia Testnet Explorer** - [Link](https://sepolia.etherscan.io/address/TODO)
+- **Sepolia Testnet Explorer** - [Link](https://sepolia.etherscan.io/address/0x6b8930a83aa58E0893206088c56E04deb983879E)
 
 - **Contract Address** - 0x6b8930a83aa58E0893206088c56E04deb983879E
 
 ### Siberium Testnet
 
-- **Siberium Testnet Explorer** - [Link](https://explorer.test.siberium.net/address/TODO)
+- **Siberium Testnet Explorer** - [Link](https://explorer.test.siberium.net/address/0xbb8c8E79c34C6420716A6937bF7E3B9226Cc81f5)
 
 - **Contract Address** - 0xbb8c8E79c34C6420716A6937bF7E3B9226Cc81f5
+
+## 6. MVP Usage 
 
 - **UI sandbox** - https://nurnberg-meistersinger.github.io/sber-hackaton-2024/
