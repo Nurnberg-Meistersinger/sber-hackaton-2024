@@ -5,6 +5,7 @@
 ## 1. General Overview
 
 - Watch [[Demo Video](TODO)] to explore workflow of the service.
+- Watch [[Presentation](https://www.canva.com/design/DAGGJiscxBQ/ay7GFpa1CL_YGy7lf4ACIw/edit?utm_content=DAGGJiscxBQ&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)] to explore the main features.
 
 According to [CoinMarketCap data](https://coinmarketcap.com/currencies/volume/24-hour/), as of `04/19/2024`, the total daily trading volume for the cryptocurrencies `BTC` and `ETH` amounted to more than `$60b`. This means that the crypto trading market today is one of the largest in the entire Web3 industry.
 
