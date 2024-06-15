@@ -1,3 +1,4 @@
 export interface WalletProviderInterface {
-    connect(): Promise<string|null>
+    connectWithAccount(): Promise<string|null>
+    connectWithNetwork(): Promise<boolean>
 }

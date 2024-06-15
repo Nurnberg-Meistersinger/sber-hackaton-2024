@@ -19,13 +19,17 @@ export class WalletService {
       return scheduled([this.address$.getValue()], asapScheduler)
     }
 
-    return from(this.walletProvider.connect())
+    return from(this.walletProvider.connectWithAccount())
       .pipe(
         filter((address: string|null) => !!address),
         tap((address: string) => {
           this.address$.next(address)
         }),
       )
+  }
+
+  public async connectNetwork(): Promise<boolean> {
+    return await this.walletProvider.connectWithNetwork()
   }
 
   public getAddress(): string {

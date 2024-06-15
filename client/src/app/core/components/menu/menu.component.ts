@@ -70,7 +70,7 @@ export class MenuComponent implements OnInit {
 
     this.walletService.connect().subscribe(
       (account: string) => {
-        console.log('connect to provider', account)
+        console.log('Connect to provider', account)
         this.connectionModel.setConnectionStatus(ProviderStatusEnum.CONNECTED)
       },
       (error: Error) => {
