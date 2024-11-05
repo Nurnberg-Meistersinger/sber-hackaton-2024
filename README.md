@@ -1,6 +1,6 @@
 # Sber Profitability Proving Service
 
-## Team: "Fraternitas<>Libertatis". Built for [Sber Hackaton 2024](https://www.sberbank.com/ru/person/forms/hackathon).
+## Team: "Protectorium". Built for [Sber Hackaton 2024](https://www.sberbank.com/ru/person/forms/hackathon).
 
 ## 1. General Overview
 
